@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        /* Basic styles for the to-do app */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #0080ff;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 24px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>To-Do List</h1>
+    </header>
+
+    <div class="container">
+        <h2>Pending Tasks</h2>
+        <ul id="pending-tasks">
+            <!-- Pending tasks will be listed here -->
+        </ul>
+
+        <h2>Completed Tasks</h2>
+        <ul id="completed-tasks">
+            <!-- Completed tasks will be listed here -->
+        </ul>
+
+        <input type="text" id="new-task" placeholder="Add a new task">
+        <button onclick="addTask()">Add</button>
+    </div>
+
+    <script>
+const pendingTasksList = document.getElementById('pending-tasks');
+const completedTasksList = document.getElementById('completed-tasks');
+const newTaskInput = document.getElementById('new-task');
+
+function addTask() {
+            const taskText = newTaskInput.value.trim();
+            if (taskText === '') return;
+
+            const li = document.createElement('li');
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+
+            checkbox.addEventListener('change', function () {
+                if (checkbox.checked) {
+                    li.classList.add('completed');
+                    completedTasksList.appendChild(li);
+                } else {
+                    li.classList.remove('completed');
+                    pendingTasksList.appendChild(li);
+                }
+            });
+
+            li.appendChild(checkbox);
+            li.appendChild(document.createTextNode(taskText));
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.addEventListener('click', function () {
+                li.remove();
+            });
+
+            li.appendChild(deleteButton);
+
+            pendingTasksList.appendChild(li);
+
+            newTaskInput.value = '';
+}
+    </script>
+</body>
+</html>
